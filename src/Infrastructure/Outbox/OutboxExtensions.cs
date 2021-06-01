@@ -7,7 +7,7 @@ namespace Infrastructure.Outbox
 {
     public static class OutboxExtensions
     {
-        public static IServiceCollection AddOutbox(this IServiceCollection services, IConfiguration Configuration, Action<DbContextOptionsBuilder> dbContextOptions = null)
+        public static IServiceCollection AddOutbox(this IServiceCollection services, IConfiguration Configuration)
         {
             var options = new OutboxOptions();
             Configuration.GetSection(nameof(OutboxOptions)).Bind(options);
@@ -15,13 +15,6 @@ namespace Infrastructure.Outbox
 
             switch (options.OutboxType.ToLowerInvariant())
             {
-                // case "efcore":
-                // case "ef":
-                //     services.AddEfCoreOutboxStore(dbContextOptions);
-                //     break;
-                // case "dapr":
-                //     services.AddDaprOutbox(Configuration);
-                //     break;
                 case "mongo":
                 case "mongodb":
                     services.AddMongoDbOutbox(Configuration);
