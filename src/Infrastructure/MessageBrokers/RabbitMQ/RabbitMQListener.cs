@@ -91,7 +91,7 @@ namespace Infrastructure.MessageBrokers.RabbitMQ
 
         private Action<RawRabbit.Configuration.Exchange.IExchangeDeclarationBuilder> GetExchangeDeclaration(Type type)
         {
-            var name = MessageBrokersHelper.GetTypeName(type);
+            var name = EventBusHelper.GetTypeName(type);
 
             return GetExchangeDeclaration(name);
         }

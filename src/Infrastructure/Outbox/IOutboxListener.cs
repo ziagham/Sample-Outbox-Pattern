@@ -1,11 +1,12 @@
-using Infrastructure.Core.Events;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Outbox
 {
     public interface IOutboxListener
     {
-        Task Commit(OutboxMessage message);
-        Task Commit<TEvent>(TEvent @event) where TEvent : IEvent;
+        Task Commit<T>(T message);
     }
 }

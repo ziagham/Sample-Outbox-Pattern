@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Events;
 using Infrastructure.Core;
 using Infrastructure.MessageBrokers;
+using Infrastructure.MessageBrokers.RabbitMQ;
 using Infrastructure.Outbox;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +32,7 @@ namespace UserService
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddMessageBroker(Configuration)
+                .AddRabbitMQ(Configuration)
                 .AddOutbox(Configuration)
                 .AddCore(typeof(Startup), typeof(EventsExtensions));
 

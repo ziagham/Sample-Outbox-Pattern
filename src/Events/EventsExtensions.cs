@@ -1,5 +1,5 @@
 ﻿using Infrastructure.Core.Events;
-using Infrastructure.MessageBrokers;
+using Infrastructure.MessageBrokers.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using System;
 using System.Linq;

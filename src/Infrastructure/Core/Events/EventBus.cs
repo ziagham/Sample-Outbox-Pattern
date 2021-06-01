@@ -1,4 +1,3 @@
-using Infrastructure.EventStores;
 using Infrastructure.MessageBrokers;
 using Infrastructure.Outbox;
 using MediatR;
@@ -33,23 +32,6 @@ namespace Infrastructure.Core.Events
             foreach (var @event in events)
             {
                 await SendToMessageBroker(@event);
-            }
-        }
-
-        public virtual async Task Commit(StreamState stream)
-        {
-            if (_outboxListener != null)
-            {
-                var message = Mapping.Map<StreamState, OutboxMessage>(stream);
-                await _outboxListener.Commit(message);
-            }
-            else if (_eventListener != null)
-            {
-                await _eventListener.Publish(stream.Data, stream.Type);
-            }
-            else
-            {
-                throw new ArgumentNullException("No event listener found");
             }
         }
 

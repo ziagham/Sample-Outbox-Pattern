@@ -1,7 +1,5 @@
-using Infrastructure.Outbox.Stores.MongoDb;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Infrastructure.Outbox
 {
@@ -13,17 +11,7 @@ namespace Infrastructure.Outbox
             Configuration.GetSection(nameof(OutboxOptions)).Bind(options);
             services.Configure<OutboxOptions>(Configuration.GetSection(nameof(OutboxOptions)));
 
-            switch (options.OutboxType.ToLowerInvariant())
-            {
-                case "mongo":
-                case "mongodb":
-                    services.AddMongoDbOutbox(Configuration);
-                    break;
-                default:
-                    throw new Exception($"Outbox type '{options.OutboxType}' is not supported");
-            }
-
-            services.AddScoped<IOutboxListener, OutboxListener>();
+            services.AddSingleton<IOutboxListener, OutboxListener>();
             services.AddHostedService<OutboxProcessor>();
 
             return services;
