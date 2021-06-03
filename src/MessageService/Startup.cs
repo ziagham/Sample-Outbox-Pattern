@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Events;
+using Infrastructure.Core;
+using Infrastructure.MessageBrokers.RabbitMQ;
+using Infrastructure.Outbox;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +30,10 @@ namespace MessageService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+            .AddRabbitMQ(Configuration)
+            .AddOutbox(Configuration)
+            .AddCore(typeof(Startup), typeof(EventsExtensions));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -54,6 +62,8 @@ namespace MessageService
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSubscribeAllEvents();
         }
     }
 }

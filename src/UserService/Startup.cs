@@ -32,10 +32,10 @@ namespace UserService
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddRabbitMQ(Configuration)
-                .AddOutbox(Configuration)
-                .AddCore(typeof(Startup), typeof(EventsExtensions));
-
+            .AddRabbitMQ(Configuration)
+            .AddOutbox(Configuration)
+            .AddCore(typeof(Startup), typeof(EventsExtensions));
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
